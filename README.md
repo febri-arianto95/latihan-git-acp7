@@ -169,7 +169,7 @@ Request :
 ```json 
 {
     "id" : "string, unique",
-    "category_id" : "int",
+    "category_id" : "int,Foreign Key Category Table",
     "name" : "string",
     "description" : "string",
     "price" : "long",
@@ -185,7 +185,7 @@ Response :
     "status" : "string",
     "data" : {
         "id" : "string, unique",
-        "category_id" : "int",
+        "category_id" : "int,Foreign Key Category Table",
         "name" : "string",
         "description" : "string",
         "price" : "long",
@@ -212,7 +212,7 @@ Response :
     "status" : "string",
     "data" : {
         "id" : "string, unique",
-        "category_id" : "int",
+        "category_id" : "int,Foreign Key Category Table",
         "name" : "string",
         "description" : "string",
         "price" : "long",
@@ -235,7 +235,7 @@ Request :
 
 ```json 
 {
-    "category_id" : "int",
+    "category_id" : "int,Foreign Key Category Table",
     "name" : "string",
     "description" : "string",
     "price" : "long",
@@ -251,7 +251,7 @@ Response :
     "status" : "string",
     "data" : {
         "id" : "string, unique",
-        "category_id" : "int",
+        "category_id" : "int,Foreign Key Category Table",
         "name" : "string",
         "description" : "string",
         "price" : "long",
@@ -283,7 +283,7 @@ Response :
     "data" : [
         {
             "id" : "string, unique",
-            "category_id" : "int",
+            "category_id" : "int,Foreign Key Category Table",
             "name" : "string",
             "description" : "string",
             "price" : "long",
@@ -293,7 +293,7 @@ Response :
         },
         {
             "id" : "string, unique",
-            "category_id" : "int",
+            "category_id" : "int,Foreign Key Category Table",
             "name" : "string",
             "description" : "string",
             "price" : "long",
@@ -334,7 +334,7 @@ Request :
 
 ```json 
 {
-    "id" : "int",
+    "id" : "int,unique",
     "name" : "string",
 }
 ```
@@ -346,7 +346,7 @@ Response :
     "code" : "number",
     "status" : "string",
     "data" : {
-        "id" : "int",
+        "id" : "int,unique",
         "name" : "string",
         "createdAt" : "date",
         "updatedAt" : "date"
@@ -400,16 +400,16 @@ Request :
 ```json 
 {
     "id"        : "integer",
-    "id_user"   : "integer",
+    "id_user"   : "integer,Foreign Key User Table",
     "date"      : "datetime",
     "status"    : "enum(cart,transaction,send,delivered)",
     "data_product"      : [
         {
-            "id_product"    : "integer",
+            "id_product"    : "integer,Foreign Key Product Table",
             "quantity"      : "integer"
         },
         {
-            "id_product"    : "integer",
+            "id_product"    : "integer,Foreign Key Product Table",
             "quantity"      : "integer"
         },
     ]
@@ -423,16 +423,16 @@ Response :
     "status" : "string",
     "data" : {
         "id"        : "integer",
-        "id_user"   : "integer",
+        "id_user"   : "integer,Foreign Key User Table",
         "date"      : "datetime",
         "status"    : "enum(cart,transaction,send,delivered)",
         "data_product"      : [
             {
-                "id_product"    : "integer",
+                "id_product"    : "integer,Foreign Key Product Table",
                 "quantity"      : "integer"
             },
             {
-                "id_product"    : "integer",
+                "id_product"    : "integer,Foreign Key Product Table",
                 "quantity"      : "integer"
             },
         ]
@@ -458,16 +458,16 @@ Response :
     "status" : "string",
     "data" : {
         "id"        : "integer",
-        "id_user"   : "integer",
+        "id_user"   : "integer,Foreign Key User Table",
         "date"      : "datetime",
         "status"    : "enum(cart,transaction,send,delivered)",
         "data_product"      : [
             {
-                "id_product"    : "integer",
+                "id_product"    : "integer,Foreign Key Product Table",
                 "quantity"      : "integer"
             },
             {
-                "id_product"    : "integer",
+                "id_product"    : "integer,Foreign Key Product Table",
                 "quantity"      : "integer"
             },
         ]
