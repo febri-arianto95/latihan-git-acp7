@@ -1,5 +1,10 @@
 # API Documentation
 
+## ERD 
+![alt text](https://github.com/febri-arianto95/latihan-git-acp7/issues/1#issue-864143406)
+
+
+
 ## Authentication
 
 All API must use this authentication
