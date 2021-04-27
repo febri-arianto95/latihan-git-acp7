@@ -26,3 +26,15 @@ type CategoryToProductResponse struct {
 	Name    string `json:"name", form:"name"`
 	Product []ProductResponse
 }
+type CategoryResponseAny struct {
+	Code    int      `json:"code", form:"code"`
+	Message string   `json:"message", form:"message"`
+	Status  string   `json:"status", form:"status"`
+	Data    Category `json:"data", form:"data"`
+}
+type CategoryResponseMany struct {
+	Code    int        `json:"code", form:"code"`
+	Message string     `json:"message", form:"message"`
+	Status  string     `json:"status", form:"status"`
+	Data    []Category `json:"data", form:"data"`
+}

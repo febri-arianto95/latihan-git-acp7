@@ -15,7 +15,7 @@ func New() *echo.Echo {
 	// batasi akses yang sudah punya username & password
 	e.POST("/users", controllers.CreateUsersController)
 	e.POST("/login", controllers.LoginUsersController)
-	e.GET("/users", controllers.GetUsersController)
+	// e.GET("/users", controllers.GetUsersController)
 
 	// auth basic
 	// auth := e.Group("basic")
@@ -25,6 +25,9 @@ func New() *echo.Echo {
 	jwt := e.Group("jwt")
 	jwt.Use(middleware.JWT([]byte(constants.KEY_JWT)))
 	jwt.GET("", controllers.GetUsersController)
+	jwt.POST("/product", controllers.CreateProductController)
+	jwt.GET("/product", controllers.GetProductController)
+	jwt.GET("/productbycategory", controllers.GetProByCatController)
 
 	e.GET("/users/companies", controllers.GetUsersCompanyController)
 	e.POST("/users/companies", controllers.CreateUserCompaniesController)

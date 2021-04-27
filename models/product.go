@@ -20,7 +20,6 @@ type Product struct {
 	Category    Category       `gorm:"foreignKey:IDCategory"`
 }
 type ProductRequest struct {
-	ID          string `json:"id", form:"id"`
 	IDCategory  uint   `json:"id_category", form:"id_category"`
 	Name        string `json:"name", form:"name"`
 	Description string `json:"description", form:"description"`
@@ -28,7 +27,7 @@ type ProductRequest struct {
 	Price       uint   `json:"price", form:"price"`
 }
 type ProductResponse struct {
-	ID          uint      `json:"id", form:"id", gorm:"primarykey"`
+	ID          uint      `json:"id", form:"id"`
 	CreatedAt   time.Time `json:"createdAt", form:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt", form:"updatedAt"`
 	IDCategory  uint      `json:"id_category", form:"id_category"`
@@ -39,14 +38,14 @@ type ProductResponse struct {
 	Category    Category
 }
 type ProductResponseAny struct {
-	Code    int             `json:"code", form:"code"`
-	Message string          `json:"message", form:"message"`
-	Status  string          `json:"status", form:"status"`
-	Data    ProductResponse `json:"data", form:"data"`
+	Code    int     `json:"code", form:"code"`
+	Message string  `json:"message", form:"message"`
+	Status  string  `json:"status", form:"status"`
+	Data    Product `json:"data", form:"data"`
 }
 type ProductResponseMany struct {
-	Code    int               `json:"code", form:"code"`
-	Message string            `json:"message", form:"message"`
-	Status  string            `json:"status", form:"status"`
-	Data    []ProductResponse `json:"data", form:"data"`
+	Code    int       `json:"code", form:"code"`
+	Message string    `json:"message", form:"message"`
+	Status  string    `json:"status", form:"status"`
+	Data    []Product `json:"data", form:"data"`
 }

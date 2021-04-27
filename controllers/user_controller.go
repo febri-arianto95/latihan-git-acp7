@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"project/configs"
 	"project/middleware"
@@ -105,7 +104,7 @@ func GetUsersController(c echo.Context) error {
 	// categoryId := c.QueryParam("categoryId")
 	// page := c.QueryParam("page")
 	// userId, _ := strconv.Atoi(c.Param("userId"))
-	fmt.Println("ini token=", c)
+	// fmt.Println("ini token=", c)
 	var users []models.User
 	err := configs.DB.Find(&users).Error
 
