@@ -13,6 +13,7 @@ type Category struct {
 	UpdatedAt time.Time      `json:"updatedAt", form:"updatedAt"`
 	DeletedAt gorm.DeletedAt `json:"deletedAt", form:"deletedAt", gorm:"index"`
 	Name      string         `json:"name", form:"name"`
+	Product   []Product      `gorm:"foreignKey:IDCategory"`
 }
 type CategoryRequest struct {
 	Name string `json:"name", form:"name"`

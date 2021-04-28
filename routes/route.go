@@ -12,15 +12,10 @@ import (
 func New() *echo.Echo {
 	e := echo.New()
 	mid.LogMiddleware(e)
-	// batasi akses yang sudah punya username & password
 	e.POST("/users", controllers.CreateUsersController)
 	e.POST("/login", controllers.LoginUsersController)
+	e.GET("/product", controllers.GetProductController)
 	// e.GET("/users", controllers.GetUsersController)
-
-	// auth basic
-	// auth := e.Group("basic")
-	// auth.Use(middleware.BasicAuth(mid.AuthBasicMiddleware))
-	// auth.GET("", controllers.GetUsersController)
 
 	jwt := e.Group("jwt")
 	jwt.Use(middleware.JWT([]byte(constants.KEY_JWT)))

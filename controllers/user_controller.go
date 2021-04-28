@@ -18,24 +18,23 @@ func CreateUsersController(c echo.Context) error {
 	userDB.Name = userInput.Name
 	userDB.Email = userInput.Email
 	userDB.Password = userInput.Password
-	check_email := configs.DB.Where("email = ?", userInput.Email).Find(&userDB).Error
-	if check_email != nil {
+	check_email := configs.DB.Where("email = ?", userInput.Email).Find(&userDB).RowsAffected
+	if check_email != 0 {
 		return c.JSON(http.StatusInternalServerError, models.UserResponse{
 			Code:    http.StatusInternalServerError,
-			Message: "email sudah ada ->" + check_email.Error(),
+			Message: "email sudah ada",
 			Status:  "error",
 		})
-	} else {
-		err := configs.DB.Save(&userDB).Error
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, models.UserResponse{
-				Code:    http.StatusInternalServerError,
-				Message: err.Error(),
-				Status:  "error",
-			})
-		}
-		return LoginUsersController(c)
 	}
+	err := configs.DB.Save(&userDB).Error
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, models.UserResponse{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+			Status:  "error",
+		})
+	}
+	return LoginUsersController(c)
 
 	// token, err := middleware.GenerateToken(int(userDB.ID), userDB.Name)
 	// if err != nil {

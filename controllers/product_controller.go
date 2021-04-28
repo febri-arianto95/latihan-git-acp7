@@ -47,17 +47,27 @@ func CreateProductController(c echo.Context) error {
 	})
 }
 func GetProductController(c echo.Context) error {
-	// categoryId := c.QueryParam("categoryId")
-	// var temp uint
-	// temp=strconv.ParseUint(categoryId, 10, 0)
-	// var categoryDB models.Category
-	// err_categories := configs.DB.Find(&categoryDB, ).Error
+	var categoryId = c.QueryParam("categoryId")
+	if categoryId != "" {
+		var categoryDB []models.Category
+		row_cat := configs.DB.Where("id = ?", categoryId).Find(&categoryDB).RowsAffected
+		err_cat := configs.DB.Preload(clause.Associations).Find(&categoryDB, categoryId).Error
+		if err_cat != nil && row_cat == 0 {
+			return c.JSON(http.StatusInternalServerError, models.CategoryResponseMany{
+				Code:    http.StatusInternalServerError,
+				Message: err_cat.Error(),
+				Status:  "error",
+			})
+		}
+		return c.JSON(http.StatusOK, models.CategoryResponseMany{
+			Code:    http.StatusOK,
+			Message: "Success get data all product by category",
+			Status:  "success",
+			Data:    categoryDB,
+		})
 
-	// if err_categories != nil {
-
-	// }
+	}
 	var productDB []models.Product
-	// err := configs.DB.Joins("Category").Find(&productDB).Error
 	err := configs.DB.Preload(clause.Associations).Find(&productDB).Error
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, models.ProductResponseMany{
@@ -75,8 +85,9 @@ func GetProductController(c echo.Context) error {
 }
 
 func GetProByCatController(c echo.Context) error {
+	var categoryId = c.QueryParam("categoryId")
 	var categoryDB []models.Category
-	err := configs.DB.Preload(clause.Associations).Find(&categoryDB).Error
+	err := configs.DB.Preload(clause.Associations).Find(&categoryDB, categoryId).Error
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, models.CategoryResponseMany{
 			Code:    http.StatusInternalServerError,
@@ -86,7 +97,7 @@ func GetProByCatController(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, models.CategoryResponseMany{
 		Code:    http.StatusOK,
-		Message: "Success get data all product",
+		Message: "Success get data all product by category",
 		Status:  "success",
 		Data:    categoryDB,
 	})
