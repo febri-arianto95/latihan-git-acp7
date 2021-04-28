@@ -16,23 +16,23 @@ func CreateCartController(c echo.Context) error {
 	c.Bind(&cartInput)
 
 	//data user
-	var users models.User
-	err_users := configs.DB.Find(&users, userId).Error
-	if err_users != nil {
+	var userDB models.User
+	err_userDB := configs.DB.Find(&userDB, userId).Error
+	if err_userDB != nil {
 		return c.JSON(http.StatusInternalServerError, models.ResponseNotif{
 			Code:    http.StatusInternalServerError,
-			Message: err_users.Error(),
+			Message: err_userDB.Error(),
 			Status:  "error",
 		})
 	}
 
 	//data product
-	var products models.Product
-	err_products := configs.DB.Find(&products, cartInput.IDProduct).Error
-	if err_products != nil {
+	var productDB models.Product
+	err_productDB := configs.DB.Find(&productDB, cartInput.IDProduct).Error
+	if err_productDB != nil {
 		return c.JSON(http.StatusInternalServerError, models.ResponseNotif{
 			Code:    http.StatusInternalServerError,
-			Message: err_users.Error(),
+			Message: err_productDB.Error(),
 			Status:  "error",
 		})
 	}
@@ -42,8 +42,8 @@ func CreateCartController(c echo.Context) error {
 	cartDB.IDUser = uint(userId)
 	cartDB.IDProduct = cartInput.IDProduct
 	cartDB.Quantity = cartInput.Quantity
-	cartDB.Users = users
-	cartDB.Product = products
+	cartDB.Users = userDB
+	cartDB.Product = productDB
 
 	err := configs.DB.Save(&cartDB).Error
 	if err != nil {

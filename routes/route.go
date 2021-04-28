@@ -25,6 +25,7 @@ func New() *echo.Echo {
 	jwt.POST("/cart", controllers.CreateCartController)
 	jwt.GET("/cart", controllers.GetCartController)
 	jwt.DELETE("/cart/:id", controllers.DeleteCartController)
+	jwt.POST("/checkout", controllers.CreateTransactionController)
 
 	e.GET("/users/companies", controllers.GetUsersCompanyController)
 	e.POST("/users/companies", controllers.CreateUserCompaniesController)
