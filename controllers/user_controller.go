@@ -35,29 +35,6 @@ func CreateUsersController(c echo.Context) error {
 		})
 	}
 	return LoginUsersController(c)
-
-	// token, err := middleware.GenerateToken(int(userDB.ID), userDB.Name)
-	// if err != nil {
-	// 	return c.JSON(http.StatusInternalServerError, models.UserResponse{
-	// 		Code:    http.StatusInternalServerError,
-	// 		Message: err.Error(),
-	// 		Status:  "error jwt",
-	// 	})
-	// }
-
-	// var userTokenResponse = models.UsersTokenResponse{
-	// 	ID:    userDB.ID,
-	// 	Name:  userDB.Name,
-	// 	Email: userDB.Email,
-	// 	Token: token,
-	// }
-
-	// return c.JSON(http.StatusOK, models.UserTokenResponseSingle{
-	// 	Code:    http.StatusOK,
-	// 	Message: "Success register",
-	// 	Status:  "success",
-	// 	Data:    userTokenResponse,
-	// })
 }
 
 func LoginUsersController(c echo.Context) error {
@@ -68,7 +45,7 @@ func LoginUsersController(c echo.Context) error {
 
 	err := configs.DB.Where("email = ? AND password = ?", userInput.Email, userInput.Password).Find(&userDB).Error
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, models.UserResponse{
+		return c.JSON(http.StatusInternalServerError, models.ResponseNotif{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 			Status:  "error",
@@ -77,7 +54,7 @@ func LoginUsersController(c echo.Context) error {
 
 	token, err := middleware.GenerateToken(int(userDB.ID), userDB.Name)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, models.UserTokenResponseSingle{
+		return c.JSON(http.StatusInternalServerError, models.ResponseNotif{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 			Status:  "error jwt",
@@ -100,15 +77,11 @@ func LoginUsersController(c echo.Context) error {
 }
 
 func GetUsersController(c echo.Context) error {
-	// categoryId := c.QueryParam("categoryId")
-	// page := c.QueryParam("page")
-	// userId, _ := strconv.Atoi(c.Param("userId"))
-	// fmt.Println("ini token=", c)
 	var users []models.User
 	err := configs.DB.Find(&users).Error
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, models.UserResponse{
+		return c.JSON(http.StatusInternalServerError, models.ResponseNotif{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 			Status:  "error",
