@@ -13,6 +13,13 @@ import (
 func CreateUsersController(c echo.Context) error {
 	var userInput models.UserRequest
 	c.Bind(&userInput)
+	if userInput.Email == "" || userInput.Password == "" || userInput.Name == "" {
+		return c.JSON(http.StatusInternalServerError, models.UserResponse{
+			Code:    http.StatusInternalServerError,
+			Message: "All input is required",
+			Status:  "error",
+		})
+	}
 
 	var userDB models.User
 	userDB.Name = userInput.Name
@@ -22,7 +29,7 @@ func CreateUsersController(c echo.Context) error {
 	if check_email != 0 {
 		return c.JSON(http.StatusInternalServerError, models.UserResponse{
 			Code:    http.StatusInternalServerError,
-			Message: "email sudah ada",
+			Message: "Email is already exist",
 			Status:  "error",
 		})
 	}
@@ -40,10 +47,16 @@ func CreateUsersController(c echo.Context) error {
 func LoginUsersController(c echo.Context) error {
 	var userInput models.UserRequest
 	c.Bind(&userInput)
-
 	var userDB models.User
-
-	err := configs.DB.Where("email = ? AND password = ?", userInput.Email, userInput.Password).Find(&userDB).Error
+	check_user := configs.DB.Where("email = ? AND password=?", userInput.Email, userInput.Password).Find(&userDB).RowsAffected
+	if check_user == 0 {
+		return c.JSON(http.StatusInternalServerError, models.UserResponse{
+			Code:    http.StatusInternalServerError,
+			Message: "Invalid email or password",
+			Status:  "error",
+		})
+	}
+	err := configs.DB.Where("Email = ? AND Password = ?", userInput.Email, userInput.Password).Find(&userDB).Error
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, models.ResponseNotif{
 			Code:    http.StatusInternalServerError,
@@ -51,7 +64,6 @@ func LoginUsersController(c echo.Context) error {
 			Status:  "error",
 		})
 	}
-
 	token, err := middleware.GenerateToken(int(userDB.ID), userDB.Name)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, models.ResponseNotif{

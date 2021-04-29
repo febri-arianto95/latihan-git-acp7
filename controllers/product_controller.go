@@ -24,7 +24,7 @@ func CreateProductController(c echo.Context) error {
 		})
 	}
 	var productDB models.Product
-	productDB.IDCategory = productInput.IDCategory
+	productDB.IDCategory = productInput.IDCategory //.id_category
 	productDB.Name = productInput.Name
 	productDB.Description = productInput.Description
 	productDB.Stock = productInput.Stock
@@ -52,7 +52,7 @@ func GetProductController(c echo.Context) error {
 		var categoryDB []models.Category
 		row_cat := configs.DB.Where("id = ?", categoryId).Find(&categoryDB).RowsAffected
 		err_cat := configs.DB.Preload(clause.Associations).Find(&categoryDB, categoryId).Error
-		if err_cat != nil && row_cat == 0 {
+		if err_cat != nil || row_cat == 0 {
 			return c.JSON(http.StatusInternalServerError, models.ResponseNotif{
 				Code:    http.StatusInternalServerError,
 				Message: err_cat.Error(),

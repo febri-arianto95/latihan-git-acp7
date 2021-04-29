@@ -25,6 +25,7 @@ type ProductRequest struct {
 	Description string `json:"description", form:"description"`
 	Stock       uint   `json:"stock", form:"stock"`
 	Price       uint   `json:"price", form:"price"`
+	Category    Category
 }
 type ProductResponse struct {
 	ID          uint      `json:"id", form:"id"`
