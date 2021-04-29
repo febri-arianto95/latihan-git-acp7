@@ -48,15 +48,15 @@ func LoginUsersController(c echo.Context) error {
 	var userInput models.UserRequest
 	c.Bind(&userInput)
 	var userDB models.User
-	check_user := configs.DB.Where("email = ? AND password=?", userInput.Email, userInput.Password).Find(&userDB).RowsAffected
+	check_user := configs.DB.Where("email = ? AND password = ?", userInput.Email, userInput.Password).Find(&userDB).RowsAffected
 	if check_user == 0 {
-		return c.JSON(http.StatusInternalServerError, models.UserResponse{
+		return c.JSON(http.StatusInternalServerError, models.ResponseNotif{
 			Code:    http.StatusInternalServerError,
 			Message: "Invalid email or password",
 			Status:  "error",
 		})
 	}
-	err := configs.DB.Where("Email = ? AND Password = ?", userInput.Email, userInput.Password).Find(&userDB).Error
+	err := configs.DB.Where("email = ? AND password = ?", userInput.Email, userInput.Password).Find(&userDB).Error
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, models.ResponseNotif{
 			Code:    http.StatusInternalServerError,

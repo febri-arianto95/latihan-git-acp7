@@ -16,7 +16,7 @@ type Transaction struct {
 	Total     uint                `json:"total", form:"total"`
 	Status    string              `json:"status", form:"status", gorm:"type:string('checkout','paid','send','delivered')"`
 	User      User                `gorm:"foreignKey:IDUser"`
-	Detail    []DetailTransaction `gorm:"foreignKey:IDProduct"`
+	Detail    []DetailTransaction `gorm:"foreignKey:IDTransaction"`
 }
 
 //DB details_transaction
